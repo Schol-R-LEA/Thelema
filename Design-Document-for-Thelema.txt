@@ -1,0 +1,75 @@
+Special Forms
+---------------------------------------------------------------------------------------------------------
+Note: primitive or system forms are pre-pended with a dollar sign '$'. This is a convention meant to 
+
+(eval x env)
+Evaluate the list x in the given environment.
+
+(apply func args)
+Apply a function to a set of arguments.
+
+($bind env x y) 
+Bind a symbol to a value in the given environment. Primitive form used to build the various 'def' hooks.
+
+(def x binding)
+General-purpose binding macro. Can be extended by the client-programmer using 'def-hook' meta-macro.
+
+- (const value)
+Adds a constant to static memory, and returns a reference to it.
+
+- (fn (args) body)
+Basic function constructor. Returns an anonymous function. Functions created with fn *must not* have any side effects, or call on any procedures.
+
+- (proc (args) body) 
+Basic procedure constructor. Returns an anonymous procedure. Procedures may have side-effects.
+
+- (pred (args) body)
+Specialized form of fn that is used to create predicates; must return a boolean value.
+
+- (class (instances) (constructors) (method-names))
+
+- (macro (args) body)
+Creates a simple named macro. Unlike defsyntax, 
+
+---------------------------------------------------------------------------------------------------------
+
+(defsyntax (pattern) (expansion))
+
+---------------------------------------------------------------------------------------------------------
+(import (module) :(min-version) :(max-version) :(imported-components)) 
+Import a module. the module argument is a list of module-submodule-etc. names. :min-version is a required
+keyword argument specifying the minimum version of the module as a four-part list, three numeric values and an enumeration containing either 'alpha', 'beta', 'release-candidate', or 'stable', with priority in that order (lowest to highest). :max-version is an optional keyword argument in the same format as :min-version. Imported-components is an optional list of imported functions, macros, classes, constants, etc. If imported-components is not specified, the entire library is imported, with name-munging.
+
+In Thelema, name-munging consists of automatically generating a name for the imported components in the form 
+
+    module-name:sub-module-name:sub-sub-module-name:...:component
+
+for example, 
+    (import (controls conditionals) :min-version (0 0 1 alpha))
+
+    (controls:conditionals:unless (pred? x) (func y))	
+	
+Since this is a generated symbol acting as the name of the imported component, there is no need for any special syntax.
+
+---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+Standard Libraries
+------------------
+(streams)
+(lists)
+(lists filters)
+(arrays)
+(controls conditionals) 
+(controls iterators)
+(graphics)
+(graphics windowing)
+(graphics formats)
+(encryption)
+(encryption hashes)
+(network)
+(network raw)
+(network socket)
+(network http)
+(network http secure)
+(network ssh)
+(network transfer)
