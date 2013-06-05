@@ -1,4 +1,9 @@
-Special Forms
+Thelema is a general-purpose programming language of the Lisp family, and is closest to R6RS Scheme in overall structure.
+However, Thelema takes a more pragmatic tack on several design questions, and is intended to to allow flexible reflectivity
+and a more general (if less hygenic) macro system.
+
+
+Standard Binding Forms
 ---------------------------------------------------------------------------------------------------------
 Note: primitive or system forms are pre-pended with a dollar sign '$'. This is a convention meant to 
 
@@ -17,6 +22,9 @@ General-purpose binding macro. Can be extended by the client-programmer using 'd
 - (const value)
 Adds a constant to static memory, and returns a reference to it.
 
+- (enum ((key :value)))
+Defines an enumeration type, consisting of a list of keys and optional values. The 'def' name binding cuases the key names to be bound to a generated symbol of the form "type-name^key".
+
 - (fn (args) body)
 Basic function constructor. Returns an anonymous function. Functions created with fn *must not* have any side effects, or call on any procedures.
 
@@ -29,11 +37,8 @@ Specialized form of fn that is used to create predicates; must return a boolean 
 - (class (instances) (constructors) (method-names))
 
 - (macro (args) body)
-Creates a simple named macro. Unlike defsyntax, 
+Creates a simple named macro.
 
----------------------------------------------------------------------------------------------------------
-
-(defsyntax (pattern) (expansion))
 
 ---------------------------------------------------------------------------------------------------------
 (import (module) :(min-version) :(max-version) :(imported-components)) 
@@ -55,6 +60,8 @@ Since this is a generated symbol acting as the name of the imported component, t
 ---------------------------------------------------------------------------------------------------------
 Standard Libraries
 ------------------
+(events)
+(events exceptions)
 (streams)
 (lists)
 (lists filters)
