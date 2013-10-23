@@ -1,5 +1,6 @@
-Thelema is a general-purpose programming language of the Lisp family, and is closest to R6RS Scheme in overall structure.
-However, Thelema takes a more pragmatic tack on several design questions, and is intended to to allow flexible reflectivity
+Thelema is a general-purpose programming language of the Lisp family, and is 
+closest to R6RS Scheme in overall structure. However, Thelema takes a more pragmatic
+tack on several design questions, and is intended to to allow flexible reflectivity
 and a more general (if less hygienic) macro system.
 
 
@@ -8,10 +9,6 @@ General Syntax
 A Thelema program consists of one or more lists of the form
 
 <program> ::= [<list> | <symbol>]+
-
-<comment> ::= ";" <text>
-
-<interpreter-invocation> ::= "#!" <path>
 
 <list> ::= "(" <data-component>* ")"
 
@@ -29,13 +26,15 @@ A Thelema program consists of one or more lists of the form
 
 <symbol-start-character> ::= [<letter> | <non-reserved-glyph>]
 
-<non-reserved-glyph> ::= "!" | "$" | "*" | "&" | "-" | "_" | "+" | "=" | "?" | "/" | "~" | "{" |  "}" | "[" | "]"
+<non-reserved-glyph> ::= "!" | "$" | "*" | "&" | "-" | "_" | "+" | "=" | "?" | "/" | "{" |  "}" | "[" | "]"
 		 
-<reserved-glyph> ::= "'" | '"' | "`" | "@" | "#" | ";" | ":" | "^" | "."
+<reserved-glyph> ::= "'" | '"' | "`" | "@" | "#" | ";" | ":" | "^" | "." | "~" 
 
 <keyword> ::= ":" <symbol>
 
 <method-invocation> ::= "^" <symbol>
+
+<class-method-invocation> ::= "~" <symbol>
 
 <non-reserved-character> ::= <letter> | <digit> | <non-reserved-glyph>
 		 
@@ -56,17 +55,11 @@ A Thelema program consists of one or more lists of the form
 					 | <complex-constant>
 					 
 <integer-constant> ::= {<sign>} <decimal-constant>
-                     | "0x" <hex-digit>+
-					 | "0o" <octal-digit>+
-					 | "0y" <binary-digit>+
+                     | "#x" <hex-digit>+
+					 | "#o" <octal-digit>+
+					 | "#b" <binary-digit>+
 
-<binary-digit> ::= "0" | "1"
-
-<octal-digit> ::= <binary-digit> | "2" | "3" | "4" | "5" | "6" | "7"				 
-
-<digit> ::= <octal-digit> | "8" | "9"
-
-<hex-digit> ::= <digit> | "A" | "B" | "C" | "D" | "E" | "F"
+<binary-digit> ::= "0" | "1"					 
 	
 <decimal-constant> ::= <digit>+
 
@@ -81,73 +74,6 @@ A Thelema program consists of one or more lists of the form
 <string-constant> ::= '"' <character>* '"'
 
 <boolean-constant> ::= "#" ["t" | "f"]
-
-
----------------------------------------------------------------------------------------------------------
-Standard Data Types
----------------------------------------------------------------------------------------------------------
-$Raw - the base data type, a single system-dependent word with no interpretation. Normally, this is only used by the 
-compiler and certain libraries. 
-
-$Tag - a marker consisting of a one bit mark flag and a type tag of at least 31 bits. 
-
-$Raw-Integer - An integer of the local system word size.
-
-$Pointer - a pointer of the local system size to a location in memory.
-
-$Cons-Cell - A pair of $Pointers.
-
-$Raw-Byte-Vector - A $Raw-Integer followed by a series of one or more bytes, with no set interpretation. 
-
-$Raw-String - A $Raw-Integer followed by a series of one or more bytes encoded in the system character set.
-
-$Raw-Symbol - an internal Lisp symbol, consisting of a $Cons-Cell, where the CDR is a $Raw-String.
-
-$Environment - the base environment for data bindings. Consists of 512 $Cons-Cells, the CAR of
-each pointing to a $Raw-Symbol and the CDR pointing to an arbitrary piece of data. The first $Cons-Cell
-has a CAR pointing to the $Environment's parent, if any, and the CDR to an extended environment, if any.
-
-$Closure - the base executable type, consisting of an $Environment and a $Raw sequence of instructions.
-
-$Raw-Object - A data structure consisting of a $Tag, followed by either a $Pointer, a $Cons-Cell, a $Raw-Integer, 
-a $Raw-Byte-Vector, a $Raw-String, a $Raw-Symbol, and $Environment, or a $Closure.
-
-Object - the base of the class hierarchy. All standard types not pre-pended a dollar sign are based on this type.
-Internally, an Object consists of a $Pointer to an $Environment, one or more $Raw-Objects, one or more $Closures
-(which are automatically exported as methods), and a set of rules governing access to it's members.
-The instance methods for all Objects are:
-   ^eq? - Shallow equality. If the objects are the same (that is, the argument's address is the same as the object's),
-   then return #true, otherwise return #false.
-   ^equal? - Deep equality. If the argument's value is equal to the object's value, return #true, otherwise return #false.
-   Should traverse through a list or object to determine equality.
-   ^->string - generates a String representation of the object. 
-   ^size - size in bytes of the object. For Collection classes, this returns to total size of the Collection.
-The class methods are:
-   ~footprint - the size in bytes of an object of this class. For Container classes, this returns the basic size
-   of the object, not the size of it's contents.
-
-Class - a meta-class representing the ability to generate new classes.
-
-Symbol - a Lisp symbol. This is basically an object wrapper for $Raw-Symbol.
-
-System-Integer - Basically, an object wrapper for $Raw-Integer. Always exact.
-
-Integer - a 'big' integer type. Must be at least as large as a System-Integer. Always exact.
-
-Rational - a rational type consisting of two integral values representing the numerator and denominator. Always exact.
-
-Fixed-Decimal - a decimal real value with a fixed-size fractional part. May be exact or inexact.
-
-Real - a floating-point value of at least 64 bits in size. Always inexact.
-
-Complex - a complex value consisting of two Real values, a 'real' part and an 'imaginary' part.
-
-Char - a character in a specific encoding. Default is UTF-8.
-
-String - a string of zero or more Char values.
-
-Collection - an :abstract :mixin class defining the common methods of Collection classes.
-
 ---------------------------------------------------------------------------------------------------------
 Standard Forms
 ---------------------------------------------------------------------------------------------------------
@@ -160,8 +86,7 @@ Evaluate the list x in the given environment.
 Apply a function to a set of arguments.
 
 ($bind env x y) 
-Bind a symbol to a value in the given environment. Primitive form used to build the various 'def' hooks. 
-Normally, this is only used by the compiler and certain libraries.
+Bind a symbol to a value in the given environment. Primitive form used to build the various 'def' hooks.
 
 (def x binding)
 General-purpose binding macro. Can be extended by the client-programmer using 'def-hook' meta-macro.
@@ -173,18 +98,15 @@ Adds a constant to static memory, and returns a reference to it.
 Defines an enumeration type, consisting of a list of keys and optional values. The 'def' name binding causes the key names to be bound to a generated symbol of the form "type-name%key". Keyword modifiers include ':class', for setting the class of values, and ':value', for setting the value of a given key. 
 
 - (fn (args) body)
-Basic function constructor. Returns an anonymous function. Functions created with fn *must not* have any side effects, nor call on any procedures. Keywords include ':domain', which restricts an argument to a given domain; 'domain-assert?', which applies one or more predicates to the argument's value; ':co-domain', which promises a given return value type; and ':co-domain-assert?', which applies predicates to the return value. The keyword ':access' indicates that it accesses a value outside of the immediate environment, but in the lexical scope of the function. These keywords are always optional, but are used by the compiler to optimize the generated code, as well as specialize functions for overloading.
+Basic function constructor. Returns an anonymous function. Functions created with fn *must not* have any side effects, nor call on any procedures. Keywords include ':domain', which restricts an argument to a given domain; 'domain-assert?', which applies one or more predicates to the argument's value; ':co-domain', which promises a given return value type; and ':co-domain-assert?', which applies predicates to the return value.
 
 - (proc (args) body) 
-Basic procedure constructor. Returns an anonymous procedure. Procedures may have side-effects. In addition to the keywords applicable to a function, a procedure may have ':input', indicating that it reads a value from a source other than an argument; ':output', which indicates that it outputs to a destination other than the result; ':alter', which allows it to alter a value in the lexical environment; and ':access-dynamic' and ':alter-dynamic', which allow access to values in the dynamic (calling) environment. As with functions, these keywords are optional, except in the case of dynamic-scope accessors.
+Basic procedure constructor. Returns an anonymous procedure. Procedures may have side-effects. In addition to the keywords applicable to a function, a procedure may have ':input', indicating that it reads a value from a source other than an argument; ':output', which indicates that it outputs to a destination other than the result; :access and :alter, which allows it to read or alter a value in the lexical environment, respectively; and :access-dynamic and :alter-dynamic, which does the same for a value in the dynamic environment. These keywords are always optional, but are used by the compiler to optimize the generated code.
 
 - (pred (args) body)
 Specialized form of fn that is used to create predicates; must return a boolean value.
 
-- (new (classes) (init-args)) 
-This is specialized in the case of a class definition, as shown below:
-
-- (new Class (parents) slots)
+- (class (parents) slots)
 Define a new type or class of variables. 
 These three forms re specific to within a class definition:
 -- (property keyword-value-pairs)
