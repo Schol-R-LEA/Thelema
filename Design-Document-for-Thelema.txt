@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 Thelema is a general-purpose programming language of the Lisp family, and is 
 closest to R6RS Scheme in overall structure. However, Thelema takes a more pragmatic
 tack on several design questions, and is intended to to allow flexible reflectivity
@@ -146,32 +146,3 @@ for example,
     (controls%conditionals%unless (pred? x) (func y))	
 	
 Since this is a generated symbol acting as the name of the imported component, there is no need for any special syntax.
-
-<<<<<<< HEAD
----------------------------------------------------------------------------------------------------------
-=======
----------------------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------------------
-Standard Libraries
-------------------
-(events)
-(events exceptions)
-(streams)
-(lists)
-(lists filters)
-(arrays)
-(controls conditionals) 
-(controls iterators)
-(graphics)
-(graphics windowing)
-(graphics formats)
-(encryption)
-(encryption hashes)
-(network)
-(network raw)
-(network socket)
-(network http)
-(network http secure)
-(network ssh)
-(network transfer)
->>>>>>> 0879b6901cf3b07bc6ca3d0dca7a813ef19885f7
