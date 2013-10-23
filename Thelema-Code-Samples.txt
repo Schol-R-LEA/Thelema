@@ -1,0 +1,107 @@
+(def n 17)
+
+(def version (enum (alpha beta release-candidate stable)))
+
+(def hello-world 
+   (proc ()
+      (system%console ^print-line "Hello, World!")))
+	  
+(def square
+   (fn (x)
+      :domain x (System-Integer Integer Real) 
+	  :co-domain-assert? retval (and (within-domain (x ^class-of) retval) 
+	                                 (positive? retval))
+	  (* x x)))
+
+(def square 
+   (fn (x)
+      :domain x (Rational)   
+	  :co-domain-assert? retval (and (within-domain (x ^class-of) retval) 
+	                                 (positive? retval))
+	  (let ((numerator (x ^numerator))
+	        (denominator (x ^denominator)))
+	     (new Rational (square numerator)
+		               (square denominator)))))
+	  
+(def square
+   (fn (x)
+      :domain x (Complex) 
+	  :co-domain-assert? retval (and (within-domain (x ^class-of) retval) 
+	                                 (positive? (real-part retval)))
+	  (let ((x-real (x ^real-part))
+	        (x-imag (x ^imag-part)))
+ 	     (new Complex (+ (square x-real) (square x-imag))
+		              (* 2 (* x-real x-imag))))))
+	  
+(def even?
+   (pred (x)
+      :domain (System-Integer Integer)
+      (zero? (math%integer%modulo x 2))))
+	  
+(def Animal
+   (new Class (Object)  
+      (def species
+         (property
+		    :domain String
+		    :mutable #false
+		    :visibility #private
+            :default ""
+			:initializer #generated
+		    :accessor #generated))
+	  (def name
+          (property
+		    :domain String
+		    :mutable #false
+		    :visibility #private
+            :default ""
+			:initializer #generated
+		    :accessor #generated))
+      (def speak
+         (method ()
+	        :visibility #public
+		    (system%console ^print "woof")))
+	  (def new 
+	     (ctor (s n)
+		    :visibility #public
+			:init species s
+			:init name n))))
+			  
+(def dog (new Animal ("C. familiaris" "Toto")))
+
+(dog ^speak)
+
+(dog ^get-name)
+
+(def if 
+   (macro (condition true-clause false-clause)
+      :domain condition Boolean
+      `(cond (,condition ,true-clause)
+	         (#else ,false-clause))))
+
+(def fn
+   (macro ((List args) (Object body))
+      `(new Function (,args ,body))))
+	  
+(def pred 
+    (macro ((Class arg-type) (Object body))
+		   `:co-domain Boolean 
+    	    (new Function ((,arg-type ,(gensym "ARG1-"))  ,body))))
+			
+(def emit (proc file code . args)
+    :domain code (String)
+	:output file
+    (file ^write (code ^format args)))
+	
+(def emit-bulk (proc . code)
+    :domain code (String)
+	(emit code))
+	
+(def emit-bulk (proc . code)
+    :domain code (List)
+    :domain-assert? (null? code)
+	'())
+
+(def emit-bulk (proc . code)
+   :domain code (List)
+   (emit (car code))
+   (emit-bulk (cdr code)))
