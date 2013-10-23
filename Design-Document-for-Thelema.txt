@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Thelema is a general-purpose programming language of the Lisp family, and is 
 closest to R6RS Scheme in overall structure. However, Thelema takes a more pragmatic
 tack on several design questions, and is intended to to allow flexible reflectivity
@@ -76,6 +77,14 @@ A Thelema program consists of one or more lists of the form
 <boolean-constant> ::= "#" ["t" | "f"]
 ---------------------------------------------------------------------------------------------------------
 Standard Forms
+=======
+Thelema is a general-purpose programming language of the Lisp family, and is closest to R6RS Scheme in overall structure.
+However, Thelema takes a more pragmatic tack on several design questions, and is intended to to allow flexible reflectivity
+and a more general (if less hygenic) macro system.
+
+
+Standard Binding Forms
+>>>>>>> 0879b6901cf3b07bc6ca3d0dca7a813ef19885f7
 ---------------------------------------------------------------------------------------------------------
 Note: primitive or system forms are pre-pended with a dollar sign '$'. This is a convention meant to 
 
@@ -94,8 +103,13 @@ General-purpose binding macro. Can be extended by the client-programmer using 'd
 - (const value)
 Adds a constant to static memory, and returns a reference to it.
 
+<<<<<<< HEAD
 - (enum (key-list))
 Defines an enumeration type, consisting of a list of keys and optional values. The 'def' name binding causes the key names to be bound to a generated symbol of the form "type-name%key". Keyword modifiers include ':class', for setting the class of values, and ':value', for setting the value of a given key. 
+=======
+- (enum ((key :value)))
+Defines an enumeration type, consisting of a list of keys and optional values. The 'def' name binding cuases the key names to be bound to a generated symbol of the form "type-name^key".
+>>>>>>> 0879b6901cf3b07bc6ca3d0dca7a813ef19885f7
 
 - (fn (args) body)
 Basic function constructor. Returns an anonymous function. Functions created with fn *must not* have any side effects, nor call on any procedures. Keywords include ':domain', which restricts an argument to a given domain; 'domain-assert?', which applies one or more predicates to the argument's value; ':co-domain', which promises a given return value type; and ':co-domain-assert?', which applies predicates to the return value.
@@ -133,4 +147,31 @@ for example,
 	
 Since this is a generated symbol acting as the name of the imported component, there is no need for any special syntax.
 
+<<<<<<< HEAD
 ---------------------------------------------------------------------------------------------------------
+=======
+---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+Standard Libraries
+------------------
+(events)
+(events exceptions)
+(streams)
+(lists)
+(lists filters)
+(arrays)
+(controls conditionals) 
+(controls iterators)
+(graphics)
+(graphics windowing)
+(graphics formats)
+(encryption)
+(encryption hashes)
+(network)
+(network raw)
+(network socket)
+(network http)
+(network http secure)
+(network ssh)
+(network transfer)
+>>>>>>> 0879b6901cf3b07bc6ca3d0dca7a813ef19885f7
