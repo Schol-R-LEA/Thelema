@@ -15,15 +15,15 @@ A Thelema program consists of one or more lists of the form
 
 <list> ::= "(" <data-component>* ")"
 
-<data-component> ::= <atom>
-			       | <list>
-				   | "'" <data-component>
+<data-component> ::=  <atom>
+                    | <list>
+                    | "'" <data-component>
 
 <atom> ::= <symbol>
          | <numeric-constant>
          | <char-constant>
          | <string-constant>
-		 | <boolean-constant>
+         | <boolean-constant>
 		 
 <symbol> ::= <symbol-start-character> [<letter> | <digit> | <non-reserved-character>]*
 
@@ -43,22 +43,22 @@ A Thelema program consists of one or more lists of the form
 
 <special-character-name> := "newline" | "tab" | "space" 
                           | "quote" | "double-quote" | "quasi-quote" | "at" 
-						  | "percent" | "colon" | "hash" |"caret" | "period"
-						  | "semi-colon" 
+                          | "percent" | "colon" | "hash" |"caret" | "period"
+                          | "semi-colon" 
 
 <sign> ::= "-" | "+"
 
 <exactitude> ::= "i" | "e"
 						  
 <numeric-constant> ::= <integer-constant>
-					 | <real-constant>
-					 | <rational-constant>
-					 | <complex-constant>
+                     | <real-constant>
+                     | <rational-constant>
+                     | <complex-constant>
 					 
 <integer-constant> ::= {<sign>} <decimal-constant>
                      | "0x" <hex-digit>+
-					 | "0o" <octal-digit>+
-					 | "0y" <binary-digit>+
+                     | "0o" <octal-digit>+
+                     | "0y" <binary-digit>+
 
 <binary-digit> ::= "0" | "1"
 
