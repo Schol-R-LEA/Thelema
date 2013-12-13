@@ -1,3 +1,4 @@
+
 Thelema is a general-purpose programming language of the Lisp family, and is 
 closest to R6RS Scheme in overall structure. However, Thelema takes a more pragmatic
 tack on several design questions, and is intended to to allow flexible reflectivity
@@ -75,10 +76,9 @@ A Thelema program consists of one or more lists of the form
 
 <boolean-constant> ::= "#" ["t" | "f"]
 
-
-Standard Binding Forms
 ---------------------------------------------------------------------------------------------------------
-Note: primitive or system forms are pre-pended with a dollar sign '$'. This is a convention meant to 
+Note: primitive or system forms are pre-pended with a dollar sign '$'. This is a
+convention meant to indicate where system-dependent or low-level 
 
 (eval x env)
 Evaluate the list x in the given environment.
@@ -95,14 +95,27 @@ General-purpose binding macro. Can be extended by the client-programmer using 'd
 - (const value)
 Adds a constant to static memory, and returns a reference to it.
 
-- (enum (key-list))
-Defines an enumeration type, consisting of a list of keys and optional values. The 'def' name binding causes the key names to be bound to a generated symbol of the form "type-name%key". Keyword modifiers include ':class', for setting the class of values, and ':value', for setting the value of a given key. 
+(enum (key-list))
+Defines an enumeration type, consisting of a list of keys and optional values. The 'def' name
+binding causes the key names to be bound to a generated symbol of the form "type-name%key".
+Keyword modifiers include ':class', for setting the class of values, and ':value', for setting
+the value of a given key. 
 
 - (fn (args) body)
-Basic function constructor. Returns an anonymous function. Functions created with fn *must not* have any side effects, nor call on any procedures. Keywords include ':domain', which restricts an argument to a given domain; 'domain-assert?', which applies one or more predicates to the argument's value; ':co-domain', which promises a given return value type; and ':co-domain-assert?', which applies predicates to the return value.
+Basic function constructor. Returns an anonymous function. Functions created with fn *must not*
+have any side effects, nor call on any procedures. Keywords include ':domain', which restricts
+an argument to a given domain; 'domain-assert?', which applies one or more predicates to the
+argument's value; ':co-domain', which promises a given return value type; and ':co-domain-assert?',
+which applies predicates to the return value.
 
 - (proc (args) body) 
-Basic procedure constructor. Returns an anonymous procedure. Procedures may have side-effects. In addition to the keywords applicable to a function, a procedure may have ':input', indicating that it reads a value from a source other than an argument; ':output', which indicates that it outputs to a destination other than the result; :access and :alter, which allows it to read or alter a value in the lexical environment, respectively; and :access-dynamic and :alter-dynamic, which does the same for a value in the dynamic environment. These keywords are always optional, but are used by the compiler to optimize the generated code.
+Basic procedure constructor. Returns an anonymous procedure. Procedures may have side-effects.
+In addition to the keywords applicable to a function, a procedure may have ':input', indicating
+that it reads a value from a source other than an argument; ':output', which indicates that it
+outputs to a destination other than the result; :access and :alter, which allows it to read or
+alter a value in the lexical environment, respectively; and :access-dynamic and :alter-dynamic,
+which does the same for a value in the dynamic environment. These keywords are always optional,
+but are used by the compiler to optimize the generated code.
 
 - (pred (args) body)
 Specialized form of fn that is used to create predicates; must return a boolean value.
@@ -121,7 +134,11 @@ Creates a simple named macro.
 ---------------------------------------------------------------------------------------------------------
 (import (module) :min-version :max-version :imported-components) 
 Import a module. the module argument is a list of module-submodule-etc. names. :min-version is a required
-keyword argument specifying the minimum version of the module as a four-part list, three numeric values and an enumeration containing either 'alpha', 'beta', 'release-candidate', or 'stable', with priority in that order (lowest to highest). :max-version is an optional keyword argument in the same format as :min-version. Imported-components is an optional list of imported functions, macros, classes, constants, etc. If imported-components is not specified, the entire library is imported, with name-munging.
+keyword argument specifying the minimum version of the module as a four-part list, three numeric values
+and an enumeration containing either 'alpha', 'beta', 'release-candidate', or 'stable', with priority
+in that order (lowest to highest). :max-version is an optional keyword argument in the same format as
+:min-version. Imported-components is an optional list of imported functions, macros, classes, constants,
+etc. If imported-components is not specified, the entire library is imported, with name-munging.
 
 In Thelema, name-munging consists of automatically generating a name for the imported components in the form 
 
@@ -132,4 +149,5 @@ for example,
 
     (controls%conditionals%unless (pred? x) (func y))	
 	
-Since this is a generated symbol acting as the name of the imported component, there is no need for any special syntax.
+Since this is a generated symbol acting as the name of the imported component, there is no need for any
+special syntax.
