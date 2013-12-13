@@ -86,6 +86,9 @@ A Thelema program consists of one or more lists of the form
 ---------------------------------------------------------------------------------------------------------
 Standard Data Types
 ---------------------------------------------------------------------------------------------------------
+Note: primitive or system type are pre-pended with a dollar sign '$'. This is a convention meant to indicate 
+when low-level types are being used.
+
 $Raw - the base data type, a single system-dependent word with no interpretation. Normally, this is only used by the 
 compiler and certain libraries. 
 
@@ -153,7 +156,7 @@ Collection - an :abstract :mixin class defining the common methods of Collection
 Standard Forms
 ---------------------------------------------------------------------------------------------------------
 Note: primitive or system forms are pre-pended with a dollar sign '$'. This is a convention meant to indicate
-'when low-level forms are being used.
+when low-level forms are being used.
 
 (eval x env)
 Evaluate the list x in the given environment.
