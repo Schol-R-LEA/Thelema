@@ -30,8 +30,8 @@
                                      (positive? (real-part retval)))
       (let ((x-real (x ^real-part))
             (x-imag (x ^imag-part)))
-         (new Complex (+ (square x-real) (square x-imag))
-                      (* 2 (* x-real x-imag))))))
+         (Complex ^new (+ (square x-real) (square x-imag))
+                       (* 2 (* x-real x-imag))))))
       
 (def even?
    (pred (x)
@@ -39,7 +39,7 @@
       (zero? (math%integer%modulo x 2))))
       
 (def Animal
-   (new Class (Object)  
+   (Class ^new (Object)  
       (def species
          (property
             :domain String
