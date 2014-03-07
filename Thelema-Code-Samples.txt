@@ -85,7 +85,7 @@
 (def pred 
     (macro ((Class arg-type) (Object body))
            `:co-domain Boolean 
-            (new Function ((,arg-type ,(gensym "ARG1-"))  ,body))))
+            (Function ^new ((,arg-type ,(gensym "ARG1-"))  ,body))))
             
 (def emit (proc file code . args)
     :domain code (String)
