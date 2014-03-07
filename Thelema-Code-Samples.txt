@@ -20,8 +20,8 @@
                                      (positive? retval))
       (let ((numerator (x ^numerator))
             (denominator (x ^denominator)))
-         (new Rational (square numerator)
-                       (square denominator)))))
+         (Rational ^new (square numerator)
+                        (square denominator)))))
       
 (def square
    (fn (x)
