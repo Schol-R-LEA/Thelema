@@ -32,7 +32,16 @@
             (x-imag (x ^imag-part)))
          (Complex ^new (+ (square x-real) (square x-imag))
                        (* 2 (* x-real x-imag))))))
-      
+
+(def length 
+   (fn (x)
+      :domain n (list) 
+      (let loop ((lst x)
+                 (len 0))
+	      (if (stop? lst)
+	          len
+	          (loop (cdr lst) (inc len))))))
+					   
 (def even?
    (pred (x)
       :domain (System-Integer Integer)
