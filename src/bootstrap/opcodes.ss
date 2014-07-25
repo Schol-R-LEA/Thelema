@@ -2,7 +2,7 @@
 
 (library 
  (thelema bootstrap opcodes)
- (export instruction opcode-format)
+ (export instruction opcode-sub-fields opcode-format)
  (import
   (rnrs base (6))
   (rnrs enums (6))
@@ -14,7 +14,7 @@
    (fields mnemonic opcode-format-list))
  
  (define-record-type opcode-sub-fields
-   (fields size index))
+   (fields size bit-index))
  
  (define-record-type opcode-format
    (fields size opcode opcode-sub-field-map))
