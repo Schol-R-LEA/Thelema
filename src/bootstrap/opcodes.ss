@@ -11,4 +11,4 @@
   (rnrs records syntactic (6)))
  
  (define-record-type opcode-format
-   (fields (opcode-field-map)))
+   (fields (type opcode-field-map)))
