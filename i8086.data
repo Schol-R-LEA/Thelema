@@ -1,76 +1,33 @@
- '("AAA" ((NONE NONE NONE NONE (8 #x37 (NONE)) NONE NO)))
- '("AAD" ((NONE NONE NONE #x0A (8 #xD5 (NONE)) NONE NO)))
- '("AAM" ((NONE NONE NONE #x0A (8 #xD4 (NONE)) NONE NO)))
- '("AAS" ((NONE NONE NONE NONE (8 #xEF (NONE)) NONE NO)))
+'("AAA" ((NONE NONE NONE NONE (8 #x37 (NONE)) NONE NO)))
+
+'("AAD" ((NONE NONE NONE #x0A (8 #xD5 (NONE)) NONE NO)))
+
+'("AAM" ((NONE NONE NONE #x0A (8 #xD4 (NONE)) NONE NO)))
+
+'("AAS" ((NONE NONE NONE NONE (8 #xEF (NONE)) NONE NO)))
  
- '("ADC" ((NONE NONE NONE NONE (6 #x10 (D W)) reg REG-DEST-ONLY)
-          (NONE NONE NONE NONE (7 #x14 (W)) NONE NO)
-          (NONE NONE NONE NONE (4 #x80 (S W)) 2 ALLOWED)))
+'("ADC" ((NONE NONE NONE NONE (6 #x10 (D W)) reg REG-DEST-ONLY)
+         (NONE NONE NONE NONE (7 #x14 (W)) NONE NO)
+         (NONE NONE NONE NONE (4 #x80 (S W)) 2 ALLOWED)))
  
- (hashtable-set! i8086-mnemonics 'ADD (make-x86-instruction
-                                      "ADD"
-                                      (list (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x00 'NONE 'reg) binary-r/m-reg '(BYTE BYTE))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x01 'NONE 'reg) binary-r/m-reg '(SYSTEM-WORD SYSTEM-WORD))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x02 'NONE 'reg) binary-reg-r/m '(BYTE BYTE))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x03 'NONE 'reg) binary-reg-r/m '(BYTE SYSTEM-WORD))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x04 'NONE 'NONE) binary-acc-imm '(BYTE))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x05 'NONE 'NONE) binary-acc-imm '(SYSTEM-WORD))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x80 'NONE 0) binary-r/m-imm '(BYTE BYTE))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x81 'NONE 0) binary-r/m-imm '(SYSTEM-WORD SYSTEM-WORD))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x82 'NONE 0) binary-r/m-imm '(BYTE BYTE))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x83 'NONE 0) binary-r/m-imm '(SYSTEM-WORD BYTE)))))
- (hashtable-set! i8086-mnemonics 'AND (make-x86-instruction
-                                      "AND"
-                                      (list (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x20 'NONE 'reg) binary-r/m-reg '(BYTE BYTE))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x21 'NONE 'reg) binary-r/m-reg '(SYSTEM-WORD SYSTEM-WORD))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x22 'NONE 'reg) binary-reg-r/m '(BYTE BYTE))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x23 'NONE 'reg) binary-reg-r/m '(BYTE SYSTEM-WORD))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x24 'NONE 'NONE) binary-acc-imm '(BYTE))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x25 'NONE 'NONE) binary-acc-imm '(SYSTEM-WORD))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x80 'NONE 4) binary-r/m-imm '(BYTE BYTE))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x81 'NONE 4) binary-r/m-imm '(SYSTEM-WORD SYSTEM-WORD))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x82 'NONE 4) binary-r/m-imm '(BYTE BYTE))
-                                            (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x83 'NONE 4) binary-r/m-imm '(SYSTEM-WORD BYTE)))))
- (hashtable-set! i8086-mnemonics 'CALL (make-x86-instruction
-                                       "CALL"
-                                       (list (make-x86-opcode-field-set
-                                              (make-x86-opcode 'NONE 'NONE #xE8 'NONE 'NONE) unary-imm '(SYSTEM-WORD))
-                                             (make-x86-opcode-field-set
-                                              (make-x86-opcode 'NONE 'NONE #xFF 'NONE 2) unary-reg '(BYTE)))))
- (hashtable-set! i8086-mnemonics 'CALLF (make-x86-instruction
-                                        "CALLF"
-                                        (list (make-x86-opcode-field-set
-                                               (make-x86-opcode 'NONE 'NONE #x9A 'NONE 'NONE) unary-imm '(SYSTEM-WORD))
-                                              (make-x86-opcode-field-set
-                                               (make-x86-opcode 'NONE 'NONE #xFF 'NONE 3) unary-reg '(BYTE)))))
- (hashtable-set! i8086-mnemonics 'CBW (make-x86-instruction
-                                      "CBW"
-                                      (list (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #x98 'NONE 'NONE) nilary '(NONE)))))
- (hashtable-set! i8086-mnemonics 'CLC (make-x86-instruction
-                                      "CLC"
-                                      (list (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #xF8 'NONE 'NONE) nilary '(NONE)))))
+'("ADD" ((NONE NONE NONE NONE (6 #x00 (D W)) reg REG-DEST-ONLY)
+         (NONE NONE NONE NONE (7 #x04 (W)) NONE NO)
+         (NONE NONE NONE NONE (4 #x80 (S W)) 0 ALLOWED)))
+  
+'("AND" ((NONE NONE NONE NONE (6 #x20 (D W)) reg REG-DEST-ONLY)
+         (NONE NONE NONE NONE (7 #x24 (W)) NONE NO)
+         (NONE NONE NONE NONE (4 #x80 (S W)) 4 ALLOWED)))
+
+'("CALL" ((NONE NONE NONE NONE (8 #xE8 (NONE)) NONE NO)
+          (NONE NONE NONE NONE (8 #xFF (NONE)) 2 NO)))
+          
+ ("CALLF" ((NONE NONE NONE NONE (8 #x9A (NONE)) NONE NO)
+           (NONE NONE NONE NONE (8 #xFF (NONE)) 3 NO)))
+           
+'("CBW" ((NONE NONE (8 #x98 (NONE) NONE NO)))
+
+'("CLC" ((NONE NONE (8 #xF8 (NONE) NONE NO)))
+
  (hashtable-set! i8086-mnemonics 'CLD (make-x86-instruction
                                       "CLD"
                                       (list (make-x86-opcode-field-set
@@ -127,7 +84,4 @@
  
  
  
- (hashtable-set! i80386-mnemonics 'CMPSD (make-x86-instruction
-                                      "CMPSD"
-                                      (list (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #xA7 'NONE 'NONE) binary-mem-mem '(SYSTEM-WORD SYSTEM-WORD)))))
+ 
