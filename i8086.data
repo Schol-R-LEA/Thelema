@@ -5,7 +5,7 @@
  
  '("ADC" ((NONE NONE NONE NONE (6 #x10 (D W)) reg REG-DEST-ONLY)
           (NONE NONE NONE NONE (7 #x14 (W)) NONE NO)
-          (NONE NONE NONE NONE (4 #x80 (S W)) 2 ALWAYS)))
+          (NONE NONE NONE NONE (4 #x80 (S W)) 2 ALLOWED)))
  
  (hashtable-set! i8086-mnemonics 'ADD (make-x86-instruction
                                       "ADD"
