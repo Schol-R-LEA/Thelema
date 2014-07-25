@@ -66,7 +66,7 @@
  (define x86-mnemonics '(i8086-mnemonics i80186-mnemonics i80286-mnemonics i80287-mnemonics i80386-mnemonics i80387-mnemonics i80486-mnemonics
                                         pentium-mnemonics ppro-mnemonics MMX-mnemonics pII-mnemonics pIII-mnemonics pIV-mnemonics
                                         core-mnemonics core2-mnemonics
-                                        SSE-mnemonics SSE2-mnemonics SSE3-mnemonics SSSE3-mnemonics SSE4-mnemonics))
+                                        SSE-mnemonics SSE2-mnemonics SSE3-mnemonics SSSE3-mnemonics SSE4-mnemonics SSE41-mnemonics SSE42-mnemonics))
  
  (hashtable-set! x86-opcode-sub-field-set 'R+ (make-opcode-sub-fields 3 0))
  (hashtable-set! x86-opcode-sub-field-set 'W (make-opcode-sub-fields 1 0))
