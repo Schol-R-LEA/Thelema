@@ -17,4 +17,4 @@
    (fields size bit-index))
  
  (define-record-type opcode-format
-   (fields opcode-size opcode opcode-sub-field-map))
+   (fields opcode opcode-sub-field-map))
