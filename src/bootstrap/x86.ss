@@ -13,6 +13,11 @@
   (rnrs conditions (6))
   (thelema bootstrap opcodes))
  
+ (define-enumeration 
+   locable-states
+   (NO REG-DEST-ONLY MEM-DEST-ONLY ALWAYS) 
+   locakble-state-set)
+ 
  (define x86-word-sizes (make-hashtable symbol-hash eq?)) 
  
  (define op-size-override #x66)
