@@ -14,9 +14,9 @@
   (thelema bootstrap opcodes))
  
  (define-enumeration 
-   locable-states
+   lockable-states
    (NO REG-DEST-ONLY MEM-DEST-ONLY ALWAYS) 
-   locakble-state-set)
+   lockable-state-set)
  
  (define x86-word-sizes (make-hashtable symbol-hash eq?)) 
  
