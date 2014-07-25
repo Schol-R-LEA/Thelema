@@ -10,7 +10,8 @@
   (rnrs lists (6))
   (rnrs records syntactic (6))
   (rnrs exceptions (6))
-  (rnrs conditions (6)))
+  (rnrs conditions (6))
+  (thelema bootstrap opcodes))
  
  (define x86-word-sizes (make-hashtable symbol-hash eq?)) 
  
@@ -50,8 +51,13 @@
  (define x86-segment-overrides (make-hashtable symbol-hash eq?))
  (define x86-branch-pred-prefixes (make-hashtable symbol-hash eq?))
  
- (define-record-type x86-opcode-fields 
-   (fields r+ w s d tttn sr mf))
+ (define-record-type x86-opcode-fields
+   (fields opcode-bits sub-fields))
+   
+ (define-record-type x86-opcode-sub-fields
+   (fields size index))
+   
+ (define x86-opcode-sub-field-set (make-hashtable symbol-hash eq?))
  
  (define-record-type x86-opcode
    (fields primary-offset zero-f-offset primary-opcode secondary-opcode r/o))
@@ -61,7 +67,6 @@
  
  (define-record-type x86-instruction
    (fields mnemonic opcode-field-set))
- 
  
  (define i8086-mnemonics (make-hashtable symbol-hash eq?))
  (define i80186-mnemonics (make-hashtable symbol-hash eq?))
@@ -88,6 +93,16 @@
                                         pentium-mnemonics ppro-mnemonics MMX-mnemonics pII-mnemonics pIII-mnemonics pIV-mnemonics
                                         core-mnemonics core2-mnemonics
                                         SSE-mnemonics SSE2-mnemonics SSE3-mnemonics SSSE3-mnemonics SSE4-mnemonics))
+ 
+ (hashtable-set! x86-opcode-sub-field-set 'R+ (x86-opcode-sub-fields 3 0))
+ (hashtable-set! x86-opcode-sub-field-set 'W (x86-opcode-sub-fields 1 0))
+ (hashtable-set! x86-opcode-sub-field-set 'S (x86-opcode-sub-fields 1 1))
+ (hashtable-set! x86-opcode-sub-field-set 'D (x86-opcode-sub-fields 1 1))
+ (hashtable-set! x86-opcode-sub-field-set 'TTTN (x86-opcode-sub-fields 1 3))
+ (hashtable-set! x86-opcode-sub-field-set 'SR (x86-opcode-sub-fields 2 3))
+ (hashtable-set! x86-opcode-sub-field-set 'SRE (x86-opcode-sub-fields 3 3))
+ (hashtable-set! x86-opcode-sub-field-set 'MF (x86-opcode-sub-fields 2 1))
+ 
  
  (hashtable-set! x86-word-sizes 'NONE 0)
  (hashtable-set! x86-word-sizes 'BYTE 1)
