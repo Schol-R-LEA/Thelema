@@ -33,8 +33,8 @@
  (define addr-size-override #x67)
  
  
- (define META-OFSET-GROUP-A \x3A)
- (define META-OFSET-GROUP-B \x38)
+ (define META-OFSET-GROUP-A #x3A)
+ (define META-OFSET-GROUP-B #x38)
  
  (define x86-prefixes (make-hashtable symbol-hash eq?))
  (define x86-segment-overrides (make-hashtable symbol-hash eq?))
