@@ -52,6 +52,7 @@
  (define x86-branch-pred-prefixes (make-hashtable symbol-hash eq?))
  
  (define-record-type x86-opcode-fields
+   (parent opcode-fields)
    (fields opcode-bits sub-fields))
    
  (define-record-type x86-opcode-sub-fields
@@ -66,7 +67,8 @@
    (fields opcode field-signature arg-sizes))
  
  (define-record-type x86-instruction
-   (fields mnemonic opcode-field-set))
+   (parent instruction)
+   (fields '()))
  
  (define i8086-mnemonics (make-hashtable symbol-hash eq?))
  (define i80186-mnemonics (make-hashtable symbol-hash eq?))
