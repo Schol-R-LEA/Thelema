@@ -42,15 +42,12 @@
  
  (define-record-type x86-opcode-fields
    (parent opcode-fields)
-   (fields opcode-bits opcode sub-fields))
-   
- (define-record-type x86-opcode-sub-fields
-   (fields size index))
+   (fields opcode-size))
    
  (define x86-opcode-sub-field-set (make-hashtable symbol-hash eq?))
  
  (define-record-type x86-opcode
-   (fields primary-offset alt-offset meta-offset primary-opcode secondary-opcode r/o))
+   (fields primary-offset alt-offset meta-offset secondary-opcode primary-opcode r/o))
  
  (define-record-type x86-opcode-field-set
    (fields opcode field-signature arg-sizes))
