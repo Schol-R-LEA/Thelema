@@ -44,16 +44,11 @@
    
  (define x86-opcode-sub-field-set (make-hashtable symbol-hash eq?))
  
- (define-record-type x86-opcode
-   (parent opcode)
-   (fields primary-offset alt-offset meta-offset secondary-opcode reg/op))
- 
  (define-record-type x86-opcode-field-set
    (fields opcode field-signature arg-sizes))
  
- (define-record-type x86-instruction
-   (parent instruction)
-   (fields '()))
+ (define-record-type x86-opcode
+   (fields lockable primary-offset alt-offset meta-offset secondary-opcode opcode-fields reg/op))
  
  (define i8086-mnemonics (make-hashtable symbol-hash eq?))
  (define i80186-mnemonics (make-hashtable symbol-hash eq?))
@@ -81,14 +76,14 @@
                                         core-mnemonics core2-mnemonics
                                         SSE-mnemonics SSE2-mnemonics SSE3-mnemonics SSSE3-mnemonics SSE4-mnemonics))
  
- (hashtable-set! x86-opcode-sub-field-set 'R+ (make-x86-opcode-sub-fields 3 0))
- (hashtable-set! x86-opcode-sub-field-set 'W (make-x86-opcode-sub-fields 1 0))
- (hashtable-set! x86-opcode-sub-field-set 'S (make-x86-opcode-sub-fields 1 1))
- (hashtable-set! x86-opcode-sub-field-set 'D (make-x86-opcode-sub-fields 1 1))
- (hashtable-set! x86-opcode-sub-field-set 'TTTN (make-x86-opcode-sub-fields 1 3))
- (hashtable-set! x86-opcode-sub-field-set 'SR (make-x86-opcode-sub-fields 2 3))
- (hashtable-set! x86-opcode-sub-field-set 'SRE (make-x86-opcode-sub-fields 3 3))
- (hashtable-set! x86-opcode-sub-field-set 'MF (make-x86-opcode-sub-fields 2 1))
+ (hashtable-set! x86-opcode-sub-field-set 'R+ (make-opcode-sub-fields 3 0))
+ (hashtable-set! x86-opcode-sub-field-set 'W (make-opcode-sub-fields 1 0))
+ (hashtable-set! x86-opcode-sub-field-set 'S (make-opcode-sub-fields 1 1))
+ (hashtable-set! x86-opcode-sub-field-set 'D (make-opcode-sub-fields 1 1))
+ (hashtable-set! x86-opcode-sub-field-set 'TTTN (make-opcode-sub-fields 1 3))
+ (hashtable-set! x86-opcode-sub-field-set 'SR (make-opcode-sub-fields 2 3))
+ (hashtable-set! x86-opcode-sub-field-set 'SRE (make-opcode-sub-fields 3 3))
+ (hashtable-set! x86-opcode-sub-field-set 'MF (make-opcode-sub-fields 2 1))
  
  (hashtable-set! x86-word-sizes 'NONE 0)
  (hashtable-set! x86-word-sizes 'BYTE 1)
