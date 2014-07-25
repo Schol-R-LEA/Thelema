@@ -14,4 +14,4 @@
    (fields (mnemonic opcode-format-list)))
  
  (define-record-type opcode-format
-   (fields (type size opcode-sub-field-map)))
+   (fields (type size opcode opcode-sub-field-map)))
