@@ -28,24 +28,13 @@
     IMMEDIATE)
    x8-opcode-field-set)
  
- (define nilary '(OPCODE))
- 
- (define unary-acc '(OPCODE))
- (define unary-reg '(OPCODE REG))
- (define unary-imm '(OPCODE IMMEDIATE))
- (define unary-indexed '(OPCODE SCALED/INDEXED IMMEDIATE))
- 
- (define binary-acc-reg '(OPCODE REG))
- (define binary-reg-acc '(OPCODE REG))
- (define binary-acc-imm '(OPCODE REG IMMEDIATE))
- (define binary-reg-reg '(OPCODE REG))
- (define binary-reg-imm '(OPCODE REG IMMEDIATE))
- (define binary-r/m-reg '(OPCODE MOD-R/M))
- (define binary-reg-r/m '(OPCODE MOD-R/M))
- (define binary-r/m-imm '(OPCODE MOD-R/M IMMEDIATE))
  
  (define op-size-override #x66)
  (define addr-size-override #x67)
+ 
+ 
+ (define META-OFSET-GROUP-A \x3A)
+ (define META-OFSET-GROUP-B \x38)
  
  (define x86-prefixes (make-hashtable symbol-hash eq?))
  (define x86-segment-overrides (make-hashtable symbol-hash eq?))
@@ -53,7 +42,7 @@
  
  (define-record-type x86-opcode-fields
    (parent opcode-fields)
-   (fields opcode-bits sub-fields))
+   (fields opcode-bits opcode sub-fields))
    
  (define-record-type x86-opcode-sub-fields
    (fields size index))
@@ -61,7 +50,7 @@
  (define x86-opcode-sub-field-set (make-hashtable symbol-hash eq?))
  
  (define-record-type x86-opcode
-   (fields primary-offset zero-f-offset primary-opcode secondary-opcode r/o))
+   (fields primary-offset alt-offset meta-offset primary-opcode secondary-opcode r/o))
  
  (define-record-type x86-opcode-field-set
    (fields opcode field-signature arg-sizes))
@@ -96,15 +85,14 @@
                                         core-mnemonics core2-mnemonics
                                         SSE-mnemonics SSE2-mnemonics SSE3-mnemonics SSSE3-mnemonics SSE4-mnemonics))
  
- (hashtable-set! x86-opcode-sub-field-set 'R+ (x86-opcode-sub-fields 3 0))
- (hashtable-set! x86-opcode-sub-field-set 'W (x86-opcode-sub-fields 1 0))
- (hashtable-set! x86-opcode-sub-field-set 'S (x86-opcode-sub-fields 1 1))
- (hashtable-set! x86-opcode-sub-field-set 'D (x86-opcode-sub-fields 1 1))
- (hashtable-set! x86-opcode-sub-field-set 'TTTN (x86-opcode-sub-fields 1 3))
- (hashtable-set! x86-opcode-sub-field-set 'SR (x86-opcode-sub-fields 2 3))
- (hashtable-set! x86-opcode-sub-field-set 'SRE (x86-opcode-sub-fields 3 3))
- (hashtable-set! x86-opcode-sub-field-set 'MF (x86-opcode-sub-fields 2 1))
- 
+ (hashtable-set! x86-opcode-sub-field-set 'R+ (make-x86-opcode-sub-fields 3 0))
+ (hashtable-set! x86-opcode-sub-field-set 'W (make-x86-opcode-sub-fields 1 0))
+ (hashtable-set! x86-opcode-sub-field-set 'S (make-x86-opcode-sub-fields 1 1))
+ (hashtable-set! x86-opcode-sub-field-set 'D (make-x86-opcode-sub-fields 1 1))
+ (hashtable-set! x86-opcode-sub-field-set 'TTTN (make-x86-opcode-sub-fields 1 3))
+ (hashtable-set! x86-opcode-sub-field-set 'SR (make-x86-opcode-sub-fields 2 3))
+ (hashtable-set! x86-opcode-sub-field-set 'SRE (make-x86-opcode-sub-fields 3 3))
+ (hashtable-set! x86-opcode-sub-field-set 'MF (make-x86-opcode-sub-fields 2 1))
  
  (hashtable-set! x86-word-sizes 'NONE 0)
  (hashtable-set! x86-word-sizes 'BYTE 1)
@@ -114,8 +102,8 @@
  (hashtable-set! x86-word-sizes 'OCT-WORD 16)
  (hashtable-set! x86-word-sizes 'HEX-WORD 32)
  (hashtable-set! x86-word-sizes 'HALF-K 64) 
- (hashtable-set! x86-word-sizes 'SYSTEM-HALF-WORD '(8 16))
- (hashtable-set! x86-word-sizes 'SYSTEM-WORD '(16 32 64))
+ (hashtable-set! x86-word-sizes 'SYSTEM-HALF-WORD '(1 2))
+ (hashtable-set! x86-word-sizes 'SYSTEM-WORD '(2 4 8))
  (hashtable-set! x86-word-sizes 'FP-STATE '(94 108))
  (hashtable-set! x86-word-sizes 'FP80 10)
  (hashtable-set! x86-word-sizes 'FP96 12)
