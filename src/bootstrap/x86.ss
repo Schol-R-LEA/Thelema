@@ -15,19 +15,6 @@
  
  (define x86-word-sizes (make-hashtable symbol-hash eq?)) 
  
- (define-enumeration x86-instruction-fields 
-   (PREFIX
-    SEGMENT
-    OP-SIZE-OVERRIDE
-    ADDRESS-SIZE-OVERRIDE
-    OPCODE
-    REG
-    MOD-R/M
-    SCALED/INDEXED
-    DISPLACEMENT
-    IMMEDIATE)
-   x8-opcode-field-set)
- 
  (define op-size-override #x66)
  (define addr-size-override #x67)
  
@@ -48,7 +35,7 @@
    (fields opcode field-signature arg-sizes))
  
  (define-record-type x86-opcode
-   (fields lockable primary-offset alt-offset meta-offset secondary-opcode opcode-fields reg/op))
+   (fields primary-offset alt-offset meta-offset secondary-opcode opcode reg/op lockable))
  
  (define i8086-mnemonics (make-hashtable symbol-hash eq?))
  (define i80186-mnemonics (make-hashtable symbol-hash eq?))
