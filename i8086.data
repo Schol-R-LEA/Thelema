@@ -24,22 +24,17 @@
  ("CALLF" ((NONE NONE NONE NONE (8 #x9A (NONE)) NONE NO)
            (NONE NONE NONE NONE (8 #xFF (NONE)) 3 NO)))
            
-'("CBW" ((NONE NONE (8 #x98 (NONE) NONE NO)))
+'("CBW" ((NONE NONE (8 #x98 (NONE)) NONE NO)))
 
-'("CLC" ((NONE NONE (8 #xF8 (NONE) NONE NO)))
+'("CLC" ((NONE NONE (8 #xF8 (NONE)) NONE NO)))
 
- (hashtable-set! i8086-mnemonics 'CLD (make-x86-instruction
-                                      "CLD"
-                                      (list (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #xFC 'NONE 'NONE) nilary '(NONE)))))
- (hashtable-set! i8086-mnemonics 'CLI (make-x86-instruction
-                                      "CLI"
-                                      (list (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #xFA 'NONE 'NONE) nilary '(NONE)))))
- (hashtable-set! i8086-mnemonics 'CMC (make-x86-instruction
-                                      "CMC"
-                                      (list (make-x86-opcode-field-set
-                                             (make-x86-opcode 'NONE 'NONE #xF5 'NONE 'NONE) nilary '(NONE)))))
+'("CLD" ((NONE NONE (8 #xFC (NONE)) NONE NO)))
+
+'("CLI" ((NONE NONE (8 #xFA (NONE)) NONE NO)))
+
+'("CMC" ((NONE NONE (8 #xF5 (NONE)) NONE NO)))
+
+
  (hashtable-set! i8086-mnemonics 'CMP (make-x86-instruction
                                       "CMP"
                                       (list (make-x86-opcode-field-set
