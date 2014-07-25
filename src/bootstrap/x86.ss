@@ -15,7 +15,7 @@
  
  (define-enumeration 
    lockable-states
-   (NO REG-DEST-ONLY MEM-DEST-ONLY ALWAYS) 
+   (NO REG-DEST-ONLY MEM-DEST-ONLY ALLOWED REQUIRED) 
    lockable-state-set)
  
  (define x86-word-sizes (make-hashtable symbol-hash eq?)) 
