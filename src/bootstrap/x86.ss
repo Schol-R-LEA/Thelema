@@ -28,13 +28,11 @@
     IMMEDIATE)
    x8-opcode-field-set)
  
- 
  (define op-size-override #x66)
  (define addr-size-override #x67)
  
- 
- (define META-OFSET-GROUP-A #x3A)
- (define META-OFSET-GROUP-B #x38)
+ (define META-OFFSET-GROUP-A #x3A)
+ (define META-OFFSET-GROUP-B #x38)
  
  (define x86-prefixes (make-hashtable symbol-hash eq?))
  (define x86-segment-overrides (make-hashtable symbol-hash eq?))
@@ -47,7 +45,8 @@
  (define x86-opcode-sub-field-set (make-hashtable symbol-hash eq?))
  
  (define-record-type x86-opcode
-   (fields primary-offset alt-offset meta-offset secondary-opcode primary-opcode r/o))
+   (parent opcode)
+   (fields primary-offset alt-offset meta-offset secondary-opcode reg/op))
  
  (define-record-type x86-opcode-field-set
    (fields opcode field-signature arg-sizes))
