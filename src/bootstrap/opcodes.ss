@@ -11,7 +11,7 @@
   (rnrs records syntactic (6)))
  
  (define-record-type instruction
-   (fields (mnemonic opcode-format)))
+   (fields (mnemonic opcode-format-list)))
  
  (define-record-type opcode-format
    (fields (type size opcode-sub-field-map)))
