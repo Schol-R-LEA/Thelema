@@ -1,11 +1,11 @@
- '("AAA" ((NONE NONE NONE (8 #x37 (NONE)) NONE)))
- '("AAD" ((NONE NONE #x0A (8 #xD5 (NONE)) NONE)))
- '("AAM" ((NONE NONE #x0A (8 #xD4 (NONE)) NONE)))
- '("AAS" ((NONE NONE NONE (8 #xEF (NONE)) NONE)))
+ '("AAA" ((NONE NONE NONE NONE (8 #x37 (NONE)) NONE NO)))
+ '("AAD" ((NONE NONE NONE #x0A (8 #xD5 (NONE)) NONE NO)))
+ '("AAM" ((NONE NONE NONE #x0A (8 #xD4 (NONE)) NONE NO)))
+ '("AAS" ((NONE NONE NONE NONE (8 #xEF (NONE)) NONE NO)))
  
- '("ADC" ((NONE NONE NONE (6 #x10 (D W)) NONE)
-          (NONE NONE NONE (6 #x14 (W)) reg)
-          (NONE NONE NONE (4 #x80 (NONE)) 2))))))
+ '("ADC" ((NONE NONE NONE NONE (6 #x10 (D W)) reg REG-DEST-ONLY)
+          (NONE NONE NONE NONE (7 #x14 (W)) NONE NO)
+          (NONE NONE NONE NONE (4 #x80 (S W)) 2 ALWAYS)))
  
  (hashtable-set! i8086-mnemonics 'ADD (make-x86-instruction
                                       "ADD"
