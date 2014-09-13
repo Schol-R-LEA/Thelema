@@ -21,7 +21,6 @@ characters%documents%xml
 characters%documents%ms-word
 characters%documents%odt
 characters%documents%tex
-characters%documents
 regex
 aspects
 continuations
