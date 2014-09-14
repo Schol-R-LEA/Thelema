@@ -75,7 +75,7 @@
             :init species s
             :init name n))))
               
-(def dog (Animal ^new ("C. familiaris" "Toto")))
+(def dog (Animal ~new ("C. familiaris" "Toto")))
 
 (dog ^speak)
 
