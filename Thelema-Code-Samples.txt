@@ -53,7 +53,7 @@
          (property
             :domain String
             :mutable #false
-            :visibility #private
+            :visibility #protected
             :default ""
             :initializer #generated
             :accessor #generated))
