@@ -1,6 +1,6 @@
 (def n 17)
 
-(def version (enum (alpha beta release-candidate stable)))
+(def version-category (enum (alpha beta release-candidate stable)))
 
 (def hello-world 
    (proc ()
