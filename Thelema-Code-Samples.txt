@@ -48,7 +48,7 @@
       (zero? (math%integer%modulo x 2))))
       
 (def Animal
-   (Class ^new (Object)  
+   (Class ~new (Object)  
       (def species
          (property
             :domain String
