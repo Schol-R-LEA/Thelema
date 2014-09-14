@@ -54,18 +54,19 @@
          (property
             :domain String
             :mutable #false
-            :visibility #protected
+            :visibility #public
             :default ""
             :initializer #generated
             :accessor #generated))
       (def name
           (property
             :domain String
-            :mutable #false
-            :visibility #private
+            :mutable #true
+            :visibility #public
             :default ""
             :initializer #generated
-            :accessor #generated))
+            :accessor #generated
+            :mutator #generated))
       (def speak
          (method ()
             :visibility #public
