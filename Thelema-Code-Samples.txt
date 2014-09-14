@@ -68,7 +68,7 @@
       (def speak
          (method ()
             :visibility #public
-            (system%console ^print "woof")))
+            :abstract #true))
       (def new 
          (ctor (s n)
             :visibility #public
