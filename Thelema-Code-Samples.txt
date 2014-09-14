@@ -82,7 +82,7 @@
            (system%console ^print "woof!")))
     (def new
         (ctor (name)
-           (this ~super species name))))
+           (this ~super "Canis familiaris" name))))
            
 (def toto (Dog ~new "Toto"))
 
