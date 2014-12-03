@@ -1,6 +1,6 @@
 (def n 17)
 
-(def version (enum (alpha beta release-candidate stable)))
+(def version-category (enum (alpha beta release-candidate stable)))
 
 (def hello-world 
    (proc ()
@@ -48,38 +48,48 @@
       (zero? (math%integer%modulo x 2))))
       
 (def Animal
-   (Class ^new (Object)  
+   (Class ~new (Object)
+      :abstract #true
       (def species
          (property
             :domain String
             :mutable #false
-            :visibility #private
+            :visibility #public
             :default ""
             :initializer #generated
             :accessor #generated))
       (def name
           (property
             :domain String
-            :mutable #false
-            :visibility #private
+            :mutable #true
+            :visibility #public
             :default ""
             :initializer #generated
-            :accessor #generated))
+            :accessor #generated
+            :mutator #generated))
       (def speak
          (method ()
             :visibility #public
-            (system%console ^print "woof")))
+            :abstract #true))
       (def new 
          (ctor (s n)
             :visibility #public
             :init species s
             :init name n))))
               
-(def dog (Animal ^new ("C. familiaris" "Toto")))
+(def Dog (Class ~new (Animal)
+    (def speak
+        (method ()
+           (system%console ^print "woof!")))
+    (def new
+        (ctor (name)
+           (this ~super "Canis familiaris" name))))
+           
+(def toto (Dog ~new "Toto"))
 
-(dog ^speak)
+(toto ^speak)
 
-(dog ^get-name)
+(toto ^get-name)
 
 (def if 
    (macro (condition true-clause false-clause)
