@@ -1,0 +1,108 @@
+; define the value of x as the symbol 'orange'
+(def x 'orange)
+
+; define x as a function returning the symbol 'apple'
+(def x (fn || 'apple))
+
+; define a function that displays an untyped value to the current default stream
+(def print (fn |s| (show s))
+
+; define a function with a constraint signature matching the default case of 
+; the fibonacci function, with a domain of Natural (positive integers)
+; and a co-domain of Natural (positive integer)
+(def fib
+  (fn |x ((Natural) (= x 1)|
+      :co Natural
+    1))
+
+; define the rest of the recursive fibonacci function
+; with the results automatically memoized
+(def fib
+  (fn |x (Natural)|
+      :co Natural
+      :memo
+    (* (_ (dec x)) (_ (- x 2)))))
+
+
+; the above fibonacci procedue consolidated using fn-case,
+; as well as the :synonym keyword to set three names for the
+; function
+(def :synonym (fib fibonacci golden-ratio)
+  (fn-case |n (Natural)|
+    :co Natural
+    :memo
+    (|n ((= n 1))| 1)
+    (#else (* (_ (dec x)) (_ (- x 2))))))
+
+; a function using the pattern-matching tools
+(def gen-range
+  (fn  |start (Enumerable) .. (:article) end (Enumerable)|
+    (enumerate start end)))
+
+; A simple macro.
+(def when
+  :eval-in-parse
+  (fn |condition (Boolean :no-coerce) . body (S-Expr)|
+    :co S-Expr
+    `(if condition
+       (begin
+         ,(unpack body)))))
+
+
+; example of keyword parameters, selects an action based on the 
+; compared order or magnitude of two comparable values
+(def apply-by-order
+  :eval-in-parse
+  (fn |x (Comparable) 
+       y (Comparable (comparable-to x y)) 
+       lower (S-Expr :keyword) 
+       equal (S-Expr :keyword) 
+       higher (S-Expr :keyword) 
+       default (S-Expr :keyword)|
+     `(cond
+        ((< x y) (first-existing lower default))
+         (= x y) (first-existing equal default))
+         (#else (first-existing higher default))))))   
+
+; a trivial example of the preceding in use:
+* (apply-by-order 2 5 :lower 'two :default 'what-went-wrong?)
+>>> two
+
+
+
+; a simple bracketing read macro, creating a literal
+; syntax for vectors (there will be one in the class
+; anyway, but this shows how it can be defined as a
+; stand-alone procedure).
+(def #<
+  :bracket >
+  :eval-in-lex
+  (fn | . elements|
+    :co S-Expr
+    (Vector ~new elements))))))
+
+; a macro using a captured variable
+(def )
+  
+
+; a more extensive macro   
+(def for
+   :eval-in-parse
+   (fn-case
+     ; an inner utility function
+     (let |inner-for (fn |index (Symbol) start (Integer) end (Integer) step (Cardinal) body|                   
+                        `(let local-loop ((,@index (Index-Counter ~new start end 1)) 
+                           (let |(result (begin ,(unpack body)))|
+                             (if (< count end)
+                               (local-loop (succ ,@index))
+                               result)))))|
+       ; the pattern set
+       (|index (Symbol) := (:article) start (Integer) to (:article) end (Integer (< start end)) do (:article) . body|
+        (inner-for ,@index start end 1 body))
+       (|index (Symbol) := (:article)start (Integer downto end (Integer (> start end) do . body|
+        (for ,@i start end 1 body))
+       (|index (Symbol) := start (Integer) to end (Integer (< start end)) step step-value do . body|
+        (inner-for ,@index start end step-value body))
+       (|index (Symbol) := start (Integer downto end (Integer (> start end)  step step-value do . body|
+        (inner-for ,@i start end step-value body)))))
+
